@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
     const cookieStore = await cookies();
     const search = request.nextUrl.searchParams.get("search") ?? "";
     const page = Number(request.nextUrl.searchParams.get("page") ?? 1);
-    const perPage = Number(request.nextUrl.searchParams.get("perPage") ?? 12);
     const rawTag = request.nextUrl.searchParams.get("tag") ?? "";
     const tag = rawTag === "All" ? "" : rawTag;
 
@@ -17,7 +16,7 @@ export async function GET(request: NextRequest) {
       params: {
         ...(search !== "" && { search }),
         page,
-        perPage,
+        perPage: 12,
         ...(tag && { tag }),
       },
       headers: {

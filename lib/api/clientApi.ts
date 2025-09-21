@@ -8,7 +8,7 @@ export async function fetchNotes(
   page: number,
   tag: string | undefined
 ): Promise<NotesHttpResponse> {
-  const response = await nextServer.get<NotesHttpResponse>("notes", {
+  const response = await nextServer.get<NotesHttpResponse>("/notes", {
     params: {
       search,
       page,
@@ -20,31 +20,19 @@ export async function fetchNotes(
 }
 
 export async function createNote(newNote: NewNoteData) {
-  const response = await nextServer.post<Note>("notes", newNote, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
+  const response = await nextServer.post<Note>("/notes", newNote);
 
   return response.data;
 }
 
 export async function deleteNote(noteId: string) {
-  const response = await nextServer.delete<Note>(`notes/${noteId}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
+  const response = await nextServer.delete<Note>(`/notes/${noteId}`);
 
   return response.data;
 }
 
 export async function fetchNoteById(id: string) {
-  const response = await nextServer.get<Note>(`notes/${id}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
+  const response = await nextServer.get<Note>(`/notes/${id}`);
   return response.data;
 }
 
